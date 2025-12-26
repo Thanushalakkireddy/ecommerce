@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE_URL from "../../config/apiConfig.js";
 
 export default function Wishlist() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Wishlist() {
         return;
       }
 
-      const res = await axios.get("http://localhost:8050/api/user/wishlist", {
+      const res = await axios.get(`${API_BASE_URL}/user/wishlist`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -40,7 +41,7 @@ export default function Wishlist() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.delete(
-        `http://localhost:8050/api/user/wishlist/${productId}`,
+        `${API_BASE_URL}/user/wishlist/${productId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

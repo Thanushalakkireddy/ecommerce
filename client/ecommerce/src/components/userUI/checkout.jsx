@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE_URL from "../../config/apiConfig.js";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function Checkout() {
   const fetchAddresses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:8050/api/user/addresses", {
+      const res = await axios.get(`${API_BASE_URL}/user/addresses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -58,7 +59,7 @@ export default function Checkout() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:8050/api/user/addresses",
+        `${API_BASE_URL}/user/addresses`,
         newAddress,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -103,7 +104,7 @@ export default function Checkout() {
       };
 
       const res = await axios.post(
-        "http://localhost:8050/api/user/orders",
+        `${API_BASE_URL}/user/orders`,
         orderData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE_URL from "../../config/apiConfig.js";
 
 export default function Orders() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Orders() {
         return;
       }
 
-      const res = await axios.get("http://localhost:8050/api/user/orders", {
+      const res = await axios.get(`${API_BASE_URL}/user/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -45,7 +46,7 @@ export default function Orders() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        `http://localhost:8050/api/user/orders/${orderId}/cancel`,
+        `${API_BASE_URL}/user/orders/${orderId}/cancel`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
