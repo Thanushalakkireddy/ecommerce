@@ -9,7 +9,13 @@ const app = express();
 // Configure CORS to allow requests from any origin during development
 // In production, you should specify your frontend domain
 app.use(cors({
-  origin: true,
+  origin: process.env.NODE_ENV === 'production' 
+    ? [
+        'https://ecommerce-ienf.vercel.app', 
+        'https://ecommerce-git-main-thanushalakkireddys-projects.vercel.app',
+        'https://*.vercel.app'
+      ] 
+    : true,
   credentials: true
 }));
 
