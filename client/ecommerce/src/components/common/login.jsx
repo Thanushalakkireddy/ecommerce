@@ -3,10 +3,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API_BASE_URL from "../../config/apiConfig.js";
 
-export default function Register() {
+export default function Login() {
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     pass: ""
   });
@@ -22,39 +21,37 @@ export default function Register() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/user/register`,
+        `${API_BASE_URL}/user/login`,
         {
-          name: formData.username,
           email: formData.email,
           pass: formData.pass
         }
       );
-      if (response.data.status) {
-        setMessage("Registration Successful! Please Log In.");
-        setTimeout(() => navigate('/login'), 1500);
+      
+      if (response.data.token) {
+        // Store token in localStorage
+        localStorage.setItem('token', response.data.token);
+        setMessage("Login Successful!");
+        // Redirect to user home page
+        setTimeout(() => navigate('/user/home'), 1500);
+      } else {
+        setMessage(response.data.message || "Login failed");
       }
     } catch (err) {
-      setMessage(err.message);
+      setMessage(err.response?.data?.message || err.message || "Network error occurred");
     }
   };
 
   return (
-  <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border-t-8 border-[#2874f0]">
-        <h2 className="text-3xl font-bold mb-6 text-[#2874f0] text-center">Register</h2>
-        <span className="text-green-600 mb-4 text-center block font-medium">{message}</span>
-        <input
-          type="text"
-          name="username"
-          onChange={handleChange}
-          placeholder="Username"
-          className="w-full mb-4 px-3 py-2 rounded-md bg-[#f0f5ff] text-[#212121] placeholder-gray-500 border border-[#bdbdbd] focus:outline-none focus:ring-2 focus:ring-[#2874f0]"
-        />
+        <h2 className="text-3xl font-bold mb-6 text-[#2874f0] text-center">Login</h2>
+        <span className="text-red-600 mb-4 text-center block font-medium">{message}</span>
         <input
           type="email"
-          placeholder="Email"
           name="email"
           onChange={handleChange}
+          placeholder="Email"
           className="w-full mb-4 px-3 py-2 rounded-md bg-[#f0f5ff] text-[#212121] placeholder-gray-500 border border-[#bdbdbd] focus:outline-none focus:ring-2 focus:ring-[#2874f0]"
         />
         <input
@@ -69,12 +66,12 @@ export default function Register() {
           className="w-full bg-[#fb641b] hover:bg-[#f57224] text-white font-semibold py-2 rounded-md transition-colors duration-200"
           onClick={handleSubmit}
         >
-          Register
+          Login
         </button>
         <div className="mt-4 text-[#2874f0] text-sm text-center">
-          Already have an account?{' '}
-          <Link to="/login" className="font-semibold hover:underline">
-            Sign in
+          Don't have an account?{' '}
+          <Link to="/signup" className="font-semibold hover:underline">
+            Sign up
           </Link>
         </div>
       </div>

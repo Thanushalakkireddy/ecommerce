@@ -6,7 +6,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter,Routes,Route, Link } from 'react-router-dom'
 import Header from './components/common/header.jsx';
 import MainContent from './components/common/mainContent.jsx';
-import Register from './components/common/Register.jsx';
+import Register from './components/common/register.jsx';
+import Login from './components/common/login.jsx';
 import HomePage from './components/common/HomePage.jsx';
 
 // User UI Components
@@ -39,7 +40,7 @@ createRoot(document.getElementById('root')).render(
       <Routes> 
         
   <Route path="/" element={<MainContent />} />
-  <Route path="/login" element={<MainContent />} />
+  <Route path="/login" element={<Login />} />
   <Route path="/signup" element={<Register />} />
   <Route path="/home" element={<HomePage />} />
   
