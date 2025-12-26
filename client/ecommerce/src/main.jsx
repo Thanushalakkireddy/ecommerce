@@ -8,7 +8,7 @@ import Header from './components/common/header.jsx';
 import MainContent from './components/common/mainContent.jsx';
 import Register from './components/common/register.jsx';
 import Login from './components/common/login.jsx';
-import HomePage from './components/common/HomePage.jsx';
+import HomePage from './components/common/homePage.jsx';
 
 // User UI Components
 import UserHomePage from './components/userUI/userHomePage.jsx';
